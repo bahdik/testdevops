@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Deploy to Kubernetes using kubectl
                     sh '''
-                        kubectl rollout restart deployment/yudi-testing -n $KUBERNETES_NAMESPACE
+                        kubectl rollout restart deployment/aam-testing -n $KUBERNETES_NAMESPACE
                     '''
                 }
             }

@@ -4,12 +4,12 @@ pipeline {
         // Define your Docker Hub credentials and image name here
         DOCKER_IMAGE = 'aamdsam/devops-testing:latest' // Image name
         KUBE_CONTEXT = 'your-kube-context'  // Kube context if you have multiple clusters
-        KUBERNETES_NAMESPACE = 'default'  // Replace with your namespace
+        KUBERNETES_NAMESPACE = 'app-yudi'  // Replace with your namespace
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/aamdsam/devops-testing.git'
+                git branch: 'master', url: 'https://github.com/bahdik/testdevops.git'
             }
         }
         stage('Build Docker Image') {
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     // Deploy to Kubernetes using kubectl
                     sh '''
-                        kubectl apply -f k8s/aam.yaml -n $KUBERNETES_NAMESPACE
+                        kubectl apply -f k8s/yudi.yaml -n $KUBERNETES_NAMESPACE
                     '''
                 }
             }
@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Deploy to Kubernetes using kubectl
                     sh '''
-                        kubectl rollout restart deployment/aam-testing -n $KUBERNETES_NAMESPACE
+                        kubectl rollout restart deployment/yudi-testing -n $KUBERNETES_NAMESPACE
                     '''
                 }
             }

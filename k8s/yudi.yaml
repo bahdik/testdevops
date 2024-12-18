@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-yudi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aam-deployment
+  name: yudi-deployment
+  namespace: app-yudi
   labels:
     app: portfolio
 spec:
@@ -24,7 +30,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: aam-service
+  name: yudi-service
+  namespace: app-yudi
   labels:
     app: portfolio
 spec:
@@ -38,28 +45,28 @@ spec:
   - protocol: TCP
     port: 443
     targetPort: 443
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: aam-ingress
+  name: yudi-ingress
+  namespace: app-yudi
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: devops-aam.dsam.web.id
+  - host: devops.panaihilir.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: aam-service
+            name: yudi-service
             port:
               number: 80
-  # tls: 
+  # tls:
   # - hosts:
   #   - portfolio-aam.dsam.web.id
   #   secretName: portfolio-tls
